@@ -3,8 +3,8 @@ var router = express.Router();
 // var router= require('express').Router()
 var storemodel = require('../../modelo/storeModel');
 
-router.get('/:idStore', (req, res)=>{
-    storemodel.getBySlug(req.params.idStore, (err, rows)=>{
+router.get('/:slugStore', (req, res)=>{
+    storemodel.getBySlug(req.params.slugStore, (err, rows)=>{
         if(rows.length === 0){
             res.json({error: 'el slug de la tienda no existe'})
         }else{
@@ -14,6 +14,7 @@ router.get('/:idStore', (req, res)=>{
 })
 
 router.post('/', (req, res)=>{
+    
     storemodel.insert(req.body, (err, result)=>{
         if(err) return res.json({error: err.message})
         storemodel.getById(result.insertId,(err, rows)=>{

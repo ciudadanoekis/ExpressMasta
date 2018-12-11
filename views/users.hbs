@@ -1,0 +1,23 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Mail</th>
+            <th>City</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each usersList}}
+            <tr>
+                <td>{{this.username}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.surname}}</td>
+                <td>{{this.mail}}</td>
+                <td>{{this.city}}</td>
+             </tr>
+        {{/each}}
+    </tbody>        
+
+</table>

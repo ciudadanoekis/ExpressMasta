@@ -4,14 +4,25 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
+const expphbs = require('express-handlebars');
 
 var apiRouter = require('./routes/api');
+var usersRouter = require('./routes/users');
+var indexRouter = require('./routes/index')
+var storesRouter = require('./routes/stores')
+var commentsRouter = require('./routes/comments')
+var homeRouter = require('./routes/home')
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.engine('.hbs', expphbs({
+  defaultLayout: 'main',
+  extname: '.hbs'
+}));
+app.set('view engine', '.hbs');
+
 
 app.use(cors());
 app.use(logger('dev'));
@@ -20,16 +31,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/index', indexRouter);
 app.use('/api', apiRouter);
-
+app.use('/users', usersRouter);
+app.use('/stores', storesRouter);
+app.use('/comments', commentsRouter);
+app.use('/', homeRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

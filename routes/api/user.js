@@ -13,4 +13,15 @@ router.post('/', (req, res)=>{
         })
     })
 })
+
+router.get('/', (req, res) =>{
+    regUsermodel.getAll((err, rows)=>{
+        if(err) return res.json({error:err.message});
+        res.json(rows);
+    })
+       
+})
+
+
+
 module.exports = router;

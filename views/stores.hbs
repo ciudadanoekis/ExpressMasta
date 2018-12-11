@@ -1,0 +1,36 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>city</th>
+            <th>Country</th>
+            <th>Continent</th>
+            <th>Address</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Active</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each storesList}}
+        <tr>
+            <td><a href="/stores/{{this.id}}">{{this.name}}</a></td>
+            <td>{{this.city}}</td>
+            <td>{{this.country}}</td>
+            <td>{{this.continent}}</td>
+            <td>{{this.address}}</td>
+            <td>{{this.phonenumber}}</td>
+            <td>{{this.email}}</td>
+            {{!-- <td>{{this.active}}</td> --}}
+            <td>
+                {{#if this.active }}
+                    <button><a href="http://localhost:3000/stores/active/{{this.id}}">ACTIVE</a></button>
+                {{else}}
+                    <button><a href="http://localhost:3000/stores/active/{{this.id}}">NO ACTIVE</a></button>
+                {{/if}}
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+
+</table>
