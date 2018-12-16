@@ -7,8 +7,8 @@ exports.getAll = (done)=>{
     })
 }
 
-exports.insert = ({fk_users,fk_store, comment}, done)=>{
-    db.get().query('insert into comments values (null, ?, ?, ?)', [fk_users,fk_store, comment],(err, result)=>{
+exports.insert = ({fUser,fSlug, comment}, done)=>{
+    db.get().query('INSERT INTO comments VALUES (null, ?, (SELECT id FROM stores WHERE slug=?), ?)', [fUser,fSlug, comment],(err, result)=>{
         if(err) return done(err, null);
         done(null, result);
     })
@@ -19,3 +19,10 @@ exports.getById = (idComment, done)=>{
         done(null, rows);
     })
 }
+exports.getCommentsByStore = (fk_stores, done)=>{
+    db.get().query('select c.comment, u.username, u.name, u.surname, u.mail, u.city from comments c, users u where c.fk_users=u.id and c.fk_store=(select id from stores where slug=?)', [fk_stores], (err, rows)=>{
+        if(err) return done(err, null);
+        done(null, rows);
+    })
+}
+// select c.comment, u.username, u.name, u.surname, u.mail, u.city from comments c, users u where c.fk_users=u.id and c.fk_store=(select id from stores where slug='Wakanda');
